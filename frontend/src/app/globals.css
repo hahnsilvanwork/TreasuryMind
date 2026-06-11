@@ -1,0 +1,243 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Design Tokens (Light Mode) ── */
+:root {
+  --base:      #F5F2EC;
+  --surface:   #EDEAE2;
+  --card:      #FFFFFF;
+  --card-2:    #F5F2EC;
+  --border:    rgba(17, 16, 16, 0.11);
+  --border-md: rgba(17, 16, 16, 0.18);
+  --border-hi: rgba(185, 28, 28, 0.4);
+
+  --text-1:    #111010;
+  --text-2:    #4A4A48;
+  --text-3:    #62665C; /* ≥4.9:1 on every surface in the palette — projector-safe */
+
+  --blue:      #1E40AF;
+  --blue-dim:  rgba(30, 64, 175, 0.07);
+  --gold:      #92400E;
+  --gold-dim:  rgba(146, 64, 14, 0.08);
+  --green:     #15803D;
+  --green-dim: rgba(21, 128, 61, 0.08);
+  --red:       #B91C1C;
+  --red-dim:   rgba(185, 28, 28, 0.07);
+  --purple:    #6D28D9;
+
+  --shadow-card: 0 1px 2px rgba(17,16,16,.04), 0 2px 8px rgba(17,16,16,.04);
+  --shadow-lift: 0 2px 4px rgba(17,16,16,.06), 0 8px 24px rgba(17,16,16,.08);
+  --bg-mesh-1: transparent;
+  --bg-mesh-2: transparent;
+  --grid-line: rgba(17, 16, 16, 0.052);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Semantic z-scale */
+  --z-header: 10;
+  --z-overlay: 20;
+  --z-toast: 30;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--base);
+  color: var(--text-1);
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-x: hidden;
+  /* Terminal precision: every digit the same width, everywhere */
+  font-variant-numeric: tabular-nums;
+}
+
+::selection { background: rgba(30, 64, 175, 0.14); }
+
+/* ── Interaction states (global — covers every button/link) ── */
+button {
+  transition:
+    transform 0.12s var(--ease-out),
+    filter 0.15s var(--ease-out),
+    background-color 0.15s var(--ease-out),
+    border-color 0.15s var(--ease-out),
+    color 0.15s var(--ease-out),
+    box-shadow 0.15s var(--ease-out),
+    opacity 0.15s var(--ease-out);
+}
+button:not(:disabled):hover  { filter: brightness(0.96); }
+button:not(:disabled):active { transform: translateY(1px); filter: brightness(0.92); }
+button:disabled              { cursor: not-allowed; }
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+input, select { transition: border-color 0.15s var(--ease-out); }
+input:hover, select:hover { border-color: var(--border-md) !important; }
+
+/* Subtle grid */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none; z-index: -1;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-md); border-radius: 2px; }
+
+/* ── Typography ── */
+.font-display { font-family: 'Space Grotesk', sans-serif; }
+.font-mono    { font-family: 'JetBrains Mono', monospace; }
+
+@layer utilities {
+  .font-400 { font-weight: 400; }
+  .font-500 { font-weight: 500; }
+  .font-600 { font-weight: 600; }
+  .font-700 { font-weight: 700; }
+  .font-800 { font-weight: 800; }
+  .text-2xs { font-size: 11px; line-height: 15px; }
+}
+
+/* ── Card ── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.15s ease;
+  position: relative;
+  z-index: 1;
+}
+.card:hover       { border-color: var(--border-md); }
+.card-glow:hover  { border-color: var(--border-hi); }
+.card-shimmer     {}
+
+/* ── Skeleton ── */
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position:  400px 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, var(--card) 25%, var(--card-2) 50%, var(--card) 75%);
+  background-size: 400px 100%;
+  animation: shimmer 1.4s ease infinite;
+  border-radius: 3px;
+}
+
+/* ── Badge ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 2px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  border: 1px solid transparent;
+}
+
+/* ── Animations ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%       { transform: scale(1.8); opacity: 0.3; }
+}
+@keyframes pulse-ring {
+  0%, 100% { transform: scale(1); opacity: 0.15; }
+  50%       { transform: scale(1.08); opacity: 0.08; }
+}
+/* Reference design additions */
+@keyframes dashFlow    { to { stroke-dashoffset: -16; } }
+@keyframes deficitPulse {
+  0%,100% { stroke-width: 1.5; opacity: 1; }
+  50%     { stroke-width: 2.5; opacity: 0.7; }
+}
+@keyframes spin        { to { transform: rotate(360deg); } }
+@keyframes barGrow     { from { width: 0; } }
+@keyframes glow {
+  0%,100% { box-shadow: 0 0 0 0 rgba(185,28,28,0); }
+  50%     { box-shadow: 0 0 0 6px rgba(185,28,28,0.12); }
+}
+@keyframes stepIn {
+  from { opacity: 0; transform: translateX(-6px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes dotPulse {
+  0%,100% { opacity: 1;   transform: scale(1);    }
+  50%     { opacity: 0.5; transform: scale(0.85); }
+}
+/* Success moment: ring pops, check draws itself */
+@keyframes popIn {
+  0%   { transform: scale(0.6); opacity: 0; }
+  70%  { transform: scale(1.04); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes drawCheck {
+  from { stroke-dashoffset: 36; }
+  to   { stroke-dashoffset: 0; }
+}
+.success-ring  { animation: popIn 0.45s var(--ease-out) both; }
+.success-check { stroke-dasharray: 36; animation: drawCheck 0.5s var(--ease-out) 0.25s both; }
+
+.animate-fade-up { animation: fadeUp 0.3s ease forwards; }
+
+/* ── Header nav tabs ── */
+.nav-tab { color: var(--text-3); }
+.nav-tab:hover { color: var(--text-1); }
+.nav-tab-active { color: var(--text-1); }
+
+/* ── Nav active ── */
+.nav-active {
+  background: var(--card);
+  color: var(--text-1) !important;
+  border-color: var(--border-md) !important;
+}
+.nav-active svg { color: var(--text-1) !important; }
+
+/* ── Number colors ── */
+.num-gold   { color: var(--gold); }
+.num-green  { color: var(--green); }
+.num-red    { color: var(--red); }
+.num-blue   { color: var(--blue); }
+
+/* ── Status bar ── */
+.status-bar-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 16px;
+  border-right: 1px solid var(--border);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+}
+.status-bar-item:last-child { border-right: none; }
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,21 @@
+# Render Blueprint — deploys the FastAPI backend with one click:
+# https://dashboard.render.com → New → Blueprint → select this repo.
+# After deploy, put the service URL into Vercel as BACKEND_URL.
+services:
+  - type: web
+    name: treasurymind-api
+    runtime: python
+    rootDir: backend
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        sync: false          # set in the Render dashboard, never in the repo
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      # - key: FRONTEND_ORIGIN
+      #   value: https://your-app.vercel.app
+      # - key: ESCROW_WINDOW_SECONDS
+      #   value: "15"

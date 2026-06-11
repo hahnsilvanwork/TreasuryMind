@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+
+# Environment / secrets
+.env
+.env.local
+backend/.env
+
+# Build output
+dist/
+build/
+frontend/.next/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Persisted runtime state (re-generated on start)
+backend/treasury_state.json
+backend/treasury_data.json
+
+# IDE / tool directories
+.idea/
+.claude/
+.impeccable/
+.superpowers/
+*.iml
