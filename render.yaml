@@ -1,0 +1,35 @@
+# Render Blueprint — backend (persistent Node web service; needed for SQLite file + XRPL WebSocket).
+# Deploy: Render dashboard → New → Blueprint → point at this repo. Set the `sync: false` secrets after.
+services:
+  - type: web
+    name: reduit-backend
+    runtime: node
+    plan: free
+    # --prod=false so pnpm installs devDeps (tsx/typescript) which the start command needs
+    buildCommand: corepack enable && pnpm install --frozen-lockfile --prod=false
+    startCommand: pnpm --filter backend start
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 22.12.0
+      - key: NODE_OPTIONS
+        value: --experimental-sqlite # node:sqlite needs this on Node 22/23 (harmless on 24+)
+      - key: FRONTEND_ORIGIN
+        sync: false # set to your Vercel URL, e.g. https://reduit.vercel.app
+      # AI (optional — both AIs fall back to rules if unset). Default provider = Groq (free).
+      - key: AI_PROVIDER
+        value: openai
+      - key: AI_API_BASE
+        value: https://api.groq.com/openai/v1
+      - key: AI_MODEL
+        value: llama-3.3-70b-versatile
+      - key: AI_API_KEY
+        sync: false
+      # XRPL (optional — leave LIVE_TESTNET=false to run fully simulated)
+      - key: TESTNET_RPC_URL
+        value: wss://s.altnet.rippletest.net:51233
+      - key: RLUSD_ISSUER_TESTNET
+        sync: false
+      - key: LIVE_TESTNET
+        value: "false"

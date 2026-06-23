@@ -1,0 +1,23 @@
+{
+  "name": "reduit-treasuries",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Governed corporate-treasury operating layer on XRPL — SwissHacks Zurich 2026",
+  "packageManager": "pnpm@9.12.0",
+  "engines": {
+    "node": ">=22.5"
+  },
+  "scripts": {
+    "dev": "pnpm --parallel --filter ./apps/* dev",
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "seed": "pnpm --filter backend seed",
+    "share": "npx --yes localtunnel --port 5173",
+    "provision": "pnpm --filter backend provision",
+    "prove": "pnpm --filter backend prove",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.2"
+  }
+}

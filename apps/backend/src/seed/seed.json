@@ -1,0 +1,128 @@
+{
+  "meta": [
+    {
+      "id": "clock",
+      "anchorDate": "2026-06-20T08:00:00Z",
+      "simClockOffsetSeconds": 0
+    }
+  ],
+  "entities": [
+    {
+      "id": "ent_hq_ch",
+      "legal_name": "ReduitTreasuries Group AG",
+      "country": "CH",
+      "role": "HQ",
+      "wallet_address": "rHbzPyiub1UACLXZe8jwBSuRjAe4wr9aCS",
+      "status": "Active",
+      "balance": "2000000.00",
+      "operating_buffer": "300000.00",
+      "deposit_auth": false
+    },
+    {
+      "id": "ent_brz",
+      "legal_name": "ReduitTreasuries Brasil Ltda",
+      "country": "BR",
+      "role": "Subsidiary",
+      "wallet_address": "rNVVEd2rVo5Ape1Qz4fnCVHqt5abjfZnD9",
+      "status": "Active",
+      "balance": "150000.00",
+      "operating_buffer": "200000.00",
+      "deposit_auth": true
+    },
+    {
+      "id": "ent_deu",
+      "legal_name": "ReduitTreasuries Deutschland GmbH",
+      "country": "DE",
+      "role": "Subsidiary",
+      "wallet_address": "rJjTQripinXjbjUMtXF3yByWHsvCyQhDcy",
+      "status": "Active",
+      "balance": "450000.00",
+      "operating_buffer": "100000.00",
+      "deposit_auth": true
+    },
+    {
+      "id": "ent_sgp",
+      "legal_name": "ReduitTreasuries Singapore Pte Ltd",
+      "country": "SG",
+      "role": "Subsidiary",
+      "wallet_address": "rw3xy9co1R1wdcc3rsHwhRUZFMpjay4KV9",
+      "status": "Active",
+      "balance": "60000.00",
+      "operating_buffer": "50000.00",
+      "deposit_auth": true
+    }
+  ],
+  "fundingRequests": [
+    {
+      "id": "fr_001",
+      "requester_entity_id": "ent_brz",
+      "source_entity_id": null,
+      "amount": "120000.00",
+      "purpose": "Working-capital gap before receivable",
+      "due_date": "2026-06-23T00:00:00Z",
+      "urgency": "High",
+      "status": "PendingApproval",
+      "tx_hash": null,
+      "source": "SIMULATED",
+      "network": null
+    }
+  ],
+  "vaultPositions": [
+    {
+      "id": "vp_hq_001",
+      "owner_entity_id": "ent_hq_ch",
+      "vault_id": "vault_hq_main",
+      "deposited": "500000.00",
+      "shares": "500000.00",
+      "available": "500000.00",
+      "locked": "0.00"
+    }
+  ],
+  "creditLines": [],
+  "forecasts": [],
+  "radarSignals": [],
+  "investments": [],
+  "auditEvents": [],
+  "scheduledFlows": [
+    {
+      "id": "sf_brz_01",
+      "entity_id": "ent_brz",
+      "direction": "Outflow",
+      "amount": "180000.00",
+      "date": "2026-06-23",
+      "type": "SupplierInvoice"
+    },
+    {
+      "id": "sf_brz_02",
+      "entity_id": "ent_brz",
+      "direction": "Inflow",
+      "amount": "60000.00",
+      "date": "2026-06-26",
+      "type": "Receivable"
+    },
+    {
+      "id": "sf_deu_01",
+      "entity_id": "ent_deu",
+      "direction": "Outflow",
+      "amount": "50000.00",
+      "date": "2026-06-24",
+      "type": "Payable"
+    },
+    {
+      "id": "sf_deu_02",
+      "entity_id": "ent_deu",
+      "direction": "Inflow",
+      "amount": "120000.00",
+      "date": "2026-06-22",
+      "type": "Receivable"
+    },
+    {
+      "id": "sf_sgp_01",
+      "entity_id": "ent_sgp",
+      "direction": "Outflow",
+      "amount": "25000.00",
+      "date": "2026-06-22",
+      "type": "Payable"
+    }
+  ]
+}
